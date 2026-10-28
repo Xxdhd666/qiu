@@ -1,0 +1,419 @@
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#full {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+#full .ball {
+  margin: 0;
+  background:
+    radial-gradient(115% 95% at 50% 0%, rgba(255, 255, 255, 0.84) 0%, rgba(255, 255, 255, 0.24) 42%, rgba(255, 255, 255, 0) 68%),
+    radial-gradient(90% 90% at 50% 100%, rgba(0, 102, 204, 0.04) 0%, rgba(0, 0, 0, 0) 70%),
+    var(--ballbg);
+  border: 1px solid rgba(60, 60, 67, 0.17);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 4px 10px rgba(0, 0, 0, 0.08),
+    0 10px 20px rgba(0, 0, 0, 0.09),
+    inset 0 1.2px 0.6px rgba(255, 255, 255, 0.96),
+    inset 0 -1px 1.5px rgba(0, 0, 0, 0.045);
+  transition:
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-theme="dark"] #full .ball {
+  background:
+    radial-gradient(115% 95% at 50% 0%, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0.05) 42%, rgba(255, 255, 255, 0) 68%),
+    radial-gradient(90% 90% at 50% 100%, rgba(64, 156, 255, 0.07) 0%, rgba(0, 0, 0, 0) 70%),
+    var(--ballbg);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.42),
+    0 9px 19px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0.5px rgba(255, 255, 255, 0.22),
+    inset 0 -1px 1.5px rgba(0, 0, 0, 0.34);
+}
+
+/* 内表盘立体光泽层 */
+#full .ball::before {
+  content: "";
+  position: absolute;
+  inset: 11.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.06) 68%, rgba(0, 0, 0, 0.015));
+  box-shadow:
+    inset 0 0.8px 0.5px rgba(255, 255, 255, 0.75),
+    0 0.5px 1.5px rgba(0, 0, 0, 0.035);
+  pointer-events: none;
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-theme="dark"] #full .ball::before {
+  background: radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0.18) 75%);
+  box-shadow:
+    inset 0 0.8px 0.5px rgba(255, 255, 255, 0.13),
+    0 0.5px 1.5px rgba(0, 0, 0, 0.28);
+}
+
+/* 顶部高光弧（镜面反光） */
+#full .ball::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 16px;
+  right: 16px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  opacity: 0.78;
+  transition: opacity 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-theme="dark"] #full .ball::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+#full .ball[data-tone="mid"] {
+  border-color: rgba(199, 119, 0, 0.3);
+}
+
+#full .ball[data-tone="low"] {
+  border-color: rgba(214, 58, 48, 0.4);
+}
+
+html[data-theme="dark"] #full .ball[data-tone="mid"] {
+  border-color: rgba(255, 159, 10, 0.36);
+}
+
+html[data-theme="dark"] #full .ball[data-tone="low"] {
+  border-color: rgba(255, 69, 58, 0.46);
+}
+
+html[data-theme="dark"] #full .ball-name {
+  color: #b0b0b8;
+}
+
+html[data-theme="dark"] #full .ball-num {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="dark"] #full .ball-aux {
+  color: #b0b0b8;
+}
+
+/* 鼠标悬停：轻盈放大 + 浮起 + 环轨微亮 */
+#full .ball:hover {
+  transform: translateY(-1.5px) scale(1.055);
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.08),
+    0 7px 15px rgba(0, 0, 0, 0.11),
+    0 12px 22px rgba(0, 0, 0, 0.1),
+    inset 0 1.2px 0.6px rgba(255, 255, 255, 1),
+    inset 0 -1px 1.5px rgba(0, 0, 0, 0.04);
+}
+
+#full .ball:hover::after {
+  opacity: 1;
+}
+
+html[data-theme="dark"] #full .ball:hover {
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow:
+    0 3px 7px rgba(0, 0, 0, 0.48),
+    0 11px 21px rgba(0, 0, 0, 0.56),
+    inset 0 1px 0.5px rgba(255, 255, 255, 0.28),
+    inset 0 -1px 1.5px rgba(0, 0, 0, 0.34);
+}
+
+/* 按压态与拖拽态 */
+#full .ball.pressing {
+  transform: scale(0.955);
+  transition-duration: 0.1s;
+}
+
+#full .ball.dragging {
+  cursor: grabbing;
+  transform: scale(1.035);
+  transition-duration: 0.14s;
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.14),
+    0 11px 22px rgba(0, 0, 0, 0.16),
+    inset 0 1.2px 0.6px rgba(255, 255, 255, 0.96);
+}
+
+html[data-theme="dark"] #full .ball.dragging {
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.54),
+    0 12px 22px rgba(0, 0, 0, 0.62),
+    inset 0 1px 0.5px rgba(255, 255, 255, 0.24);
+}
+
+/* 拖拽靠近屏幕左右边缘时的贴边吸附预告态 */
+#full .ball.snap-near-left {
+  transform: translateX(-3px) scale(0.94);
+  border-color: var(--blue);
+}
+
+#full .ball.snap-near-right {
+  transform: translateX(3px) scale(0.94);
+  border-color: var(--blue);
+}
+
+/* 点击回弹反馈 */
+#full .ball.clicked,
+.strip.clicked {
+  animation: clickBounce 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes clickBounce {
+  0% { transform: scale(0.94); }
+  55% { transform: scale(1.03); }
+  100% { transform: none; }
+}
+
+/* 数值刷新微脉动 */
+.ball-num.pulse {
+  animation: numPulse 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes numPulse {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.065); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- 贴边收起态窄条（固定双行稳定排版，零跳动、零裁切） ---------- */
+.strip {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  width: 68px;
+  height: 48px;
+  cursor: grab;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0) 72%),
+    var(--ballbg);
+  border: 1px solid rgba(60, 60, 67, 0.18);
+  -webkit-backdrop-filter: blur(24px) saturate(1.7);
+  backdrop-filter: blur(24px) saturate(1.7);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.09),
+    0 6px 14px rgba(0, 0, 0, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  transition:
+    width 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-theme="dark"] .strip {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 72%),
+    var(--ballbg);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.4),
+    0 8px 16px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.strip[data-tone="mid"] {
+  border-color: rgba(199, 119, 0, 0.3);
+}
+
+.strip[data-tone="low"] {
+  border-color: rgba(214, 58, 48, 0.4);
+}
+
+html[data-theme="dark"] .strip[data-tone="mid"] {
+  border-color: rgba(255, 159, 10, 0.36);
+}
+
+html[data-theme="dark"] .strip[data-tone="low"] {
+  border-color: rgba(255, 69, 58, 0.46);
+}
+
+.strip.left {
+  left: 0;
+  border-left: 0;
+  border-radius: 0 15px 15px 0;
+  align-items: flex-start;
+  padding: 0 6px 2px 10px;
+}
+
+.strip.right {
+  right: 0;
+  border-right: 0;
+  border-radius: 15px 0 0 15px;
+  align-items: flex-end;
+  padding: 0 10px 2px 6px;
+}
+
+/* 贴边窄条悬停：向屏幕内平滑探出并微展宽，文字零跳动 */
+.strip.left:hover {
+  width: 71px;
+  transform: translateX(1.5px);
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.12),
+    0 8px 18px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
+}
+
+.strip.right:hover {
+  width: 71px;
+  transform: translateX(-1.5px);
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.12),
+    0 8px 18px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
+}
+
+html[data-theme="dark"] .strip.left:hover,
+html[data-theme="dark"] .strip.right:hover {
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow:
+    0 3px 9px rgba(0, 0, 0, 0.48),
+    0 10px 20px rgba(0, 0, 0, 0.54),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.strip.pressing,
+.strip.left.pressing,
+.strip.right.pressing {
+  transform: scale(0.955);
+  transition-duration: 0.1s;
+}
+
+.strip.dragging,
+.strip.left.dragging,
+.strip.right.dragging {
+  cursor: grabbing;
+  transform: scale(1.025);
+  transition-duration: 0.14s;
+}
+
+.strip .edge {
+  position: absolute;
+  top: 8px;
+  bottom: 9px;
+  width: 3px;
+  border-radius: 99px;
+  background: var(--green);
+  transition:
+    background-color 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.strip:hover .edge {
+  transform: scaleY(1.12);
+}
+
+.strip.left .edge { left: 3.5px; }
+.strip.right .edge { right: 3.5px; }
+
+.strip-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5px;
+  width: 100%;
+  min-width: 0;
+}
+
+.strip.left .strip-body { align-items: flex-start; }
+.strip.right .strip-body { align-items: flex-end; }
+
+.strip .s1 {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 14.5px;
+  letter-spacing: -0.4px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.strip .s2 {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 12.5px;
+  color: var(--sub);
+  letter-spacing: -0.25px;
+  white-space: nowrap;
+  transition: color 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-theme="dark"] .strip .s1 {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] .strip .s2 {
+  color: #b4b4bc;
+}
+
+.strip:hover .s2 {
+  color: var(--text);
+}
+
+/* 窄条底部微进度轨 */
+.strip-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: rgba(120, 120, 128, 0.14);
+  overflow: hidden;
+}
+
+html[data-theme="dark"] .strip-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.strip-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--green);
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 贴边/展开切换动效（使用 backwards 避免动画结束后锁死 hover/pressing 的 transform 层级） */
+.mode-enter {
+  animation: ballIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+@keyframes ballIn {
+  from { opacity: 0; transform: scale(0.92); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

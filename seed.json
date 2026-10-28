@@ -1,0 +1,62 @@
+{
+  "pools": [
+    {
+      "id": "gemini",
+      "name": "Gemini 组",
+      "status": "manual",
+      "as_of": "2026-10-27T01:11:00+08:00",
+      "source": "agy /usage 人工填入",
+      "weekly": {
+        "remaining_pct": 100.0,
+        "resets_at": null
+      },
+      "five_hour": {
+        "remaining_pct": 100.0,
+        "resets_at": null
+      }
+    },
+    {
+      "id": "claude_gpt",
+      "name": "Claude",
+      "status": "manual",
+      "as_of": "2026-10-27T01:11:00+08:00",
+      "source": "agy /usage 人工填入",
+      "weekly": {
+        "remaining_pct": 100.0,
+        "resets_at": null
+      },
+      "five_hour": {
+        "remaining_pct": 100.0,
+        "resets_at": null
+      }
+    },
+    {
+      "id": "argon",
+      "name": "Gemini 4 Argon",
+      "status": "manual",
+      "as_of": "2026-10-27T01:11:00+08:00",
+      "source": "agy /usage 人工填入",
+      "weekly": {
+        "remaining_pct": 99.91,
+        "resets_at": "2026-11-03T01:10:00+08:00",
+        "resets_approx": true
+      },
+      "five_hour": null
+    }
+  ],
+  "usage": [
+    {
+      "time": "2026-10-27T01:11:00+08:00",
+      "pool_id": "argon",
+      "pool": "Gemini 4 Argon",
+      "model": "—",
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null,
+      "tokens_note": "—（官方不公开）",
+      "pct_change": -0.09,
+      "pct_basis": "周",
+      "source": "manual"
+    }
+  ]
+}
